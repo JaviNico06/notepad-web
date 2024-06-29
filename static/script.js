@@ -1,7 +1,10 @@
+let notes = []; // Definir la variable notes
+
 document.getElementById('saveButton').addEventListener('click', function() {
     const noteText = document.getElementById('note').value;
     if (noteText) {
-        addNoteToDOM(noteText, notes.length);
+        notes.push(noteText); // Añadir la nueva nota al array notes
+        addNoteToDOM(noteText, notes.length - 1);
         document.getElementById('note').value = '';
 
         // Enviar la nota al backend
@@ -19,7 +22,8 @@ document.getElementById('saveButton').addEventListener('click', function() {
 fetch('/get_notes')
     .then(response => response.json())
     .then(data => {
-        data.notes.forEach((noteText, index) => {
+        notes = data.notes; // Asignar las notas recuperadas al array notes
+        notes.forEach((noteText, index) => {
             addNoteToDOM(noteText, index);
         });
     });
@@ -51,4 +55,7 @@ function deleteNoteFromDOM(noteElement, index) {
         },
         body: JSON.stringify({ index: index })
     });
+
+    // Eliminar la nota del array notes
+    notes.splice(index, 1);
 }
