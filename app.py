@@ -6,26 +6,26 @@ notes = []
 
 @app.route('/')
 def index():
-    try:
-        return render_template('index.html')
-    except Exception as e:
-        return str(e)
+    return render_template('index.html')
 
 @app.route('/add_note', methods=['POST'])
 def add_note():
-    try:
-        note = request.json.get('note')
-        notes.append(note)
-        return '', 204
-    except Exception as e:
-        return str(e), 500
+    note = request.json.get('note')
+    notes.append(note)
+    return '', 204
 
 @app.route('/get_notes', methods=['GET'])
 def get_notes():
-    try:
-        return jsonify({'notes': notes})
-    except Exception as e:
-        return str(e), 500
+    return jsonify({'notes': notes})
+
+@app.route('/delete_note', methods=['POST'])
+def delete_note():
+    note_index = request.json.get('index')
+    if 0 <= note_index < len(notes):
+        notes.pop(note_index)
+        return '', 204
+    else:
+        return 'Not Found', 404
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -47,4 +47,21 @@ button:hover {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    position: relative;
+}
+
+.deleteButton {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background: #c82333;
 }
